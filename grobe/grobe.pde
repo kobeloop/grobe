@@ -3,8 +3,10 @@ import java.awt.event.*;
 Frame f;
 CheckboxGroup cg;
 Checkbox c1,c2,c3;
+Choice choice;
 Button b1;
 int r;
+int scaling=300;
 PShape earth;
 PImage earth_tex;
 float rotx;
@@ -20,7 +22,7 @@ void setup() {
   earth=createShape(SPHERE, 100);
   earth.setTexture(earth_tex);
   f=new Frame();
- f.setSize(200, 100);
+ f.setSize(200, 200);
   f.setLayout(null);
   b1=new Button("rotation");
   f.add(b1);
@@ -46,8 +48,25 @@ void setup() {
   f.add(c3);
   c3.setBounds(145,80,70,20);
   f.setVisible(true);
+  choice=new Choice();
+  f.add(choice);
+  choice.setBounds(25,150,150,20);
+  choice.add("Asia");
+  choice.add("Europe");
+  choice.add("Africa");
+  choice.add("North America");
+  choice.add("South America");
+  choice.add("Oceania");
 }
 void draw() {
+  if(keyPressed){
+    if(key=='f'){
+      scaling-=3;
+    }
+    if(key=='b'){
+      scaling+=3;
+    }
+  }
   background(0);
   translate(width/2, height/2); 
   if (b1.getLabel().equals("stop")) {
@@ -58,6 +77,7 @@ void draw() {
     earth.rotateX(rotx);
     earth.rotateZ(rotz);
   }
+  camera(0,0,scaling,0,0,0,0,1,0);
   shape(earth);
 }
 void speed(){
